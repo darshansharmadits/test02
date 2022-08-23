@@ -1,7 +1,7 @@
 import Card from "./card";
 import "./css/card.css";
 import "./css/user.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { convertMetauserDataTouserData, getConversionsByUserId } from "../converters/converter";
 import { UserMetadataype } from "../types/userMetadataType";
 import { UserAllInfoObjType } from "../types/userAllInfoObj.type";

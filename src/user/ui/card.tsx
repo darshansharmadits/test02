@@ -1,30 +1,29 @@
-import React, { ReactNode, useState } from "react";
-import { UserType } from "../types/userType";
+import React, { useState } from "react";
 import GraphImg from "../../assets/images/graph.png";
 import './css/card.css';
 import { UserMetadataype } from "../types/userMetadataType";
-import { Chart } from 'chart.js';
+// import { Chart } from 'chart.js';
 
-type MyDatum = { date: Date, stars: number }
+// type MyDatum = { date: Date, stars: number }
 
 
 function Card(props:any) {
     const user: UserMetadataype = props.user;
-    const userConversionInfo = props.userConversionData;
+    // const userConversionInfo = props.userConversionData;
     const [userImageErrorFlag, setUserImageErrorFlag] = useState(false);
-    var xyValues = [
-      {x:50, y:7},
-      {x:60, y:8},
-      {x:70, y:8},
-      {x:80, y:9},
-      {x:90, y:9},
-      {x:100, y:9},
-      {x:110, y:10},
-      {x:120, y:11},
-      {x:130, y:14},
-      {x:140, y:14},
-      {x:150, y:15}
-    ];
+    // var xyValues = [
+    //   {x:50, y:7},
+    //   {x:60, y:8},
+    //   {x:70, y:8},
+    //   {x:80, y:9},
+    //   {x:90, y:9},
+    //   {x:100, y:9},
+    //   {x:110, y:10},
+    //   {x:120, y:11},
+    //   {x:130, y:14},
+    //   {x:140, y:14},
+    //   {x:150, y:15}
+    // ];
     // new Chart("myChart", {
     //   type: "scatter",
     //   data: {
@@ -64,7 +63,8 @@ function Card(props:any) {
             
               <div id="user-log-graph-menu">
                 <div id="graph">
-                <canvas id="myChart"></canvas>
+                {/* <canvas id="myChart"></canvas> */}
+                <img src={GraphImg} alt="graph" />
                 </div>
                 <div id="conversion-info">
                   <p>Conversions 4/12 - 4/30</p>
