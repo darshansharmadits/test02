@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './css/card.css';
 import { UserMetadataype } from "../types/userMetadataType";
 import ApexCharts from 'apexcharts'
+import { ConversionInfoByUserType, UserConversionInfoType } from "../types/userConversion.type";
 
 function Card(props:any) {
     const user: UserMetadataype = props.user;
-    // const userConversionInfo = props.userConversionData;
+    const userConversionInfo: ConversionInfoByUserType[] = props.userConversionData;
+    console.log(userConversionInfo);
+    const xaxis = [];
+    // for(let i=0; i<userConversionInfo.length; i++) {
+    //   xaxis.push(userConversionInfo[i]);
+    // }
     const [userImageErrorFlag, setUserImageErrorFlag] = useState(false);
     var options = {
       chart: {
@@ -24,26 +30,32 @@ function Card(props:any) {
       dataLabels: {
         enabled: false
       },
-      series: [
-      ],
+      series: [{
+        name: "conversions",
+        data: [1,2,3]
+      }],
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        categories: [1,2,3]
       },
       yaxis: {
-        categories: [10,20,40,20,50,60,10,100,20]
+        categories: [100,200,300,400,500,600,700,800,900]
       }
     };
-    (async ()=>{
-      const chart = new ApexCharts(document.querySelector('#chart'), options);
-      await chart.render();
-     })();
+    useEffect(()=>{
+      console.log(options);
+      (async () => {
+        const chart = new ApexCharts(document.querySelector('#chart'), options);
+        await chart.render();
+    })();
+     }, [0]);
+    
       return (
       <div>
         <div id='main-column-user-card'>
             <div id="user-pic-name-row">
                 <div id="user-avatar" style={{backgroundColor: `rgb(${Math.random()*(255 - 0) + 100},${Math.random()*(255 - 0) + 100},${Math.random()*(255 - 0) + 100})`}}>
                 { userImageErrorFlag ? <h3>{user.name[0]}</h3> : 
-                    <img src={user.avatar} alt={user.id + "-image"} onError={() => {
+                    <img src={user.avatar} onError={() => {
                         setUserImageErrorFlag(true);
                     }} />
                      

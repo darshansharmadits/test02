@@ -1,8 +1,8 @@
 export type UserAllInfoObjType = {
     time: string;
-    impression: Number;
-    conversion: Number;
-    revenue: Number;
+    impression: number;
+    conversion: number;
+    revenue: number;
     name: string;
     avatar: string;
     occupation: string;

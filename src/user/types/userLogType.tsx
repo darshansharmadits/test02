@@ -1,7 +1,7 @@
 export type UserLogType = {
     time: string;
-    impressions: Number;
-    conversions: Number;
-    user_id: Number;
-    revenue: Number;
+    impressions: number;
+    conversions: number;
+    user_id: number;
+    revenue: number;
 }

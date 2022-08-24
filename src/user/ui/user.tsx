@@ -2,43 +2,53 @@ import Card from "./card";
 import "./css/card.css";
 import "./css/user.css";
 import { useState } from "react";
-import { convertMetauserDataTouserData, getConversionsByUserId } from "../converters/converter";
+import { convertMetauserDataToUserData, getConversionsByUserId } from "../converters/converter";
 import { UserMetadataype } from "../types/userMetadataType";
 import { UserAllInfoObjType } from "../types/userAllInfoObj.type";
-import { UserConversionInfoType } from "../types/userConversion.type";
+import { ConversionInfoByUserType, UserConversionInfoType } from "../types/userConversion.type";
 
 
 function User() {
 
-    const [userData, setUserData] = useState({} as {[key: string]: UserAllInfoObjType});
+    const [userData, setUserData] = useState({} as {[id: number]: UserAllInfoObjType});
 
-    const [userConversionData, setUserConversionData] = useState({} as {[key: string]: UserConversionInfoType});
-    if (Object.keys(userData).length === 0)
-    (async () => {
-      setUserData(await convertMetauserDataTouserData()); 
-      setUserConversionData(await getConversionsByUserId());
-    })();
+    const [userConversionData, setUserConversionData] = useState({} as UserConversionInfoType);
+    if (Object.keys(userData).length === 0) {
+      (async () => {
+        setUserData(await convertMetauserDataToUserData()); 
+      })();
+    }
+
+    if (Object.keys(userConversionData).length === 0) {
+      (async () => {
+        setUserConversionData(await getConversionsByUserId());
+        console.log(userConversionData);
+        
+      })();
+    }
+
+    
     return ( 
       <div id="user"> 
      {
       
       Object.keys(userData).map((key, index) => {
-
-        const data: UserMetadataype = userData[key] as UserAllInfoObjType;
         let user:UserMetadataype = {
-              id: parseInt(key),
-              impression: data["impression"],
-              conversion: data["conversion"],
-              name: data["name"],
-              avatar: data["avatar"],
-              occupation: data["occupation"],
-              revenue: data["revenue"],
-              time: data["time"]
+              impression: userData[key]["impression"],
+              conversion: userData[key]["conversion"],
+              name: userData[key]["name"],
+              avatar: userData[key]["avatar"],
+              occupation: userData[key]["occupation"],
+              revenue: userData[key]["revenue"],
+              time: userData[key]["time"]
         };
 
-        let userConversionCompleteData: UserConversionInfoType = userConversionData[key];
+        let userConversionCompleteData: ConversionInfoByUserType[] = userConversionData[key];
+        console.log(userConversionCompleteData);
         
-           return( <Card key={index}  user={{...user}} userConversionData={userConversionCompleteData} /> );
+           return( <Card key={index}  user={{...user}} 
+            userConversionData={userConversionCompleteData}
+             /> );
         
           } )
         };

@@ -1,6 +1,6 @@
 export type UserType = {
     name: string;
     avatar: string;
-    id: Number;
+    id: number;
     occupation: string;
 }

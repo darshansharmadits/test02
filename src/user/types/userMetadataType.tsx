@@ -1,10 +1,9 @@
 export type UserMetadataype = {
     time: string;
-    impression: Number;
-    conversion: Number;
-    revenue: Number;
+    impression: number;
+    conversion: number;
+    revenue: number;
     name: string;
     avatar: string;
-    id?: Number;
     occupation: string;
 }

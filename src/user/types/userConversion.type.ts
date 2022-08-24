@@ -1,5 +1,10 @@
 export type UserConversionInfoType = {
-    time: string;
-    conversions: Number;
-    revenue: Number;
+    [userId: number]: ConversionInfoByUserType[]
+}
+
+export type ConversionInfoByUserType = {
+    [timeStamp: string]: {
+        "impression": number,
+        "conversion": number
+    }
 }
