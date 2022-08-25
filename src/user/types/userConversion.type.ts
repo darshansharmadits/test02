@@ -1,5 +1,5 @@
 export type UserConversionInfoType = {
-    [userId: number]: ConversionInfoByUserType[]
+    [userId: number]: ConversionInfoByUserType
 }
 
 export type ConversionInfoByUserType = {

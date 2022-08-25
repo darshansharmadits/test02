@@ -52,33 +52,27 @@ export function getConversionsByUserId() {
     let userConversionsData: UserConversionInfoType = {};
     for (let i = 0; i < (userLogs).length; i++) {
         let log: ConversionImpressionLogType = userLogs[i];
-        userConversionsData[log.user_id] = []
+        userConversionsData[log.user_id] = {}
     }
     for (let i = 0; i < (userLogs).length; i++) {
         let log: ConversionImpressionLogType = userLogs[i];
-        userConversionsData[log.user_id].push({
-            [log.time]: {
-                conversion: 0,
-                impression: 0
-            }
-        });
+        userConversionsData[log.user_id][log.time] = {
+            conversion: 0,
+            impression: 0
+        };
     }
-    console.log("before converter level");
-    console.log(userConversionsData);
 
     for (let i = 0; i < (userLogs).length; i++) {
         let log: ConversionImpressionLogType = userLogs[i];
 
         if (log.type === "impression") {
-            userConversionsData[log.user_id]![log.time].impression += 1;
+            userConversionsData[log.user_id][log.time].impression += 1;
         }
 
         if (log.type === "conversion") {
-            userConversionsData[log.user_id]![log.time].conversion += 1;
+            userConversionsData[log.user_id][log.time].conversion += 1;
         }
     }
-    console.log("at converter level");
-    console.log(userConversionsData);
 
     return userConversionsData;
 }

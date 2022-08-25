@@ -1,53 +1,69 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import './css/card.css';
 import { UserMetadataype } from "../types/userMetadataType";
-import ApexCharts from 'apexcharts'
-import { ConversionInfoByUserType, UserConversionInfoType } from "../types/userConversion.type";
+import Chart from "react-apexcharts";
+import { ConversionInfoByUserType } from "../types/userConversion.type";
 
 function Card(props:any) {
     const user: UserMetadataype = props.user;
-    const userConversionInfo: ConversionInfoByUserType[] = props.userConversionData;
-    console.log(userConversionInfo);
-    const xaxis = [];
-    // for(let i=0; i<userConversionInfo.length; i++) {
-    //   xaxis.push(userConversionInfo[i]);
-    // }
+    const userConversionInfo: ConversionInfoByUserType = props.userConversionData;
+    const xAxis = [Object.keys(userConversionInfo).map((key, _) => key)];
+    const yAxis = [Object.keys(userConversionInfo).map((key, index) => index+10)]
+    let conversionCounter = 0;
+    let impressionCounter = 0;
+    const points = [Object.keys(userConversionInfo).map((key, _) =>{
+      conversionCounter += userConversionInfo[key].conversion;
+      impressionCounter += userConversionInfo[key].impression;
+      return Math.floor((conversionCounter/impressionCounter) * 100);
+    })];
+    
     const [userImageErrorFlag, setUserImageErrorFlag] = useState(false);
-    var options = {
-      chart: {
-        height: 350,
-        type: "line",
-        stacked: false
+
+    const data = {
+      options: {
+        grid: {
+          show: false,
+        },
+        chart: {
+          id: "line",
+          background: "none",
+          toolbar: {
+            show: false,
+          },
+        },
+        xaxis: {
+          labels: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          categories: [...xAxis[0]],
+        },
+        yaxis: {
+          labels: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          categories: [...yAxis[0]]
+        
+        },
       },
-      stroke: {
-        curve: 'smooth'
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "20%"
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      series: [{
-        name: "conversions",
-        data: [1,2,3]
-      }],
-      xaxis: {
-        categories: [1,2,3]
-      },
-      yaxis: {
-        categories: [100,200,300,400,500,600,700,800,900]
-      }
+      series: [
+        {
+          name: "conversion",
+          data: [...points[0]]
+        },
+      ],
     };
-    useEffect(()=>{
-      console.log(options);
-      (async () => {
-        const chart = new ApexCharts(document.querySelector('#chart'), options);
-        await chart.render();
-    })();
-     }, [0]);
     
       return (
       <div>
@@ -71,7 +87,15 @@ function Card(props:any) {
             
               <div id="user-log-graph-menu">
                 <div id="graph">
-                <div id="chart"></div>
+                  {Object.keys(data).length !== 0 ?
+                <Chart
+                  options={data.options}
+                  series={data.series}
+                  type="line"
+                  width="170" 
+              />
+               : <div>No Data Recvd</div> 
+               } 
                 </div>
                 <div id="conversion-info">
                   <p>Conversions 4/12 - 4/30</p>

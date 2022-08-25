@@ -44,11 +44,11 @@ function User() {
         };
 
         let userConversionCompleteData: ConversionInfoByUserType[] = userConversionData[key];
-        console.log(userConversionCompleteData);
         
-           return( <Card key={index}  user={{...user}} 
-            userConversionData={userConversionCompleteData}
-             /> );
+           return( 
+           <Card key={index}  user={{...user}} 
+            userConversionData={{...userConversionCompleteData}}
+            /> );
         
           } )
         };
