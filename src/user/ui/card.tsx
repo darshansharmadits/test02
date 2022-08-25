@@ -71,7 +71,7 @@ function Card(props:any) {
             <div id="user-pic-name-row">
                 <div id="user-avatar" style={{backgroundColor: `rgb(${Math.random()*(255 - 0) + 100},${Math.random()*(255 - 0) + 100},${Math.random()*(255 - 0) + 100})`}}>
                 { userImageErrorFlag ? <h3>{user.name[0]}</h3> : 
-                    <img src={user.avatar} onError={() => {
+                    <img alt="user-img" src={user.avatar} onError={() => {
                         setUserImageErrorFlag(true);
                     }} />
                      
