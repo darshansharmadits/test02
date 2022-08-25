@@ -8,9 +8,18 @@ import { UserAllInfoObjType } from "../types/userAllInfoObj.type";
 import { ConversionInfoByUserType, UserConversionInfoType } from "../types/userConversion.type";
 
 
+
+// function returnSorted(sortBy, userInfo) {
+//   if (sortBy === 'name') {
+
+//   }
+// }
+
+
 function User() {
 
     const [userData, setUserData] = useState({} as {[id: number]: UserAllInfoObjType});
+    const [sortBy, setSortBy] = useState('id');
 
     const [userConversionData, setUserConversionData] = useState({} as UserConversionInfoType);
     if (Object.keys(userData).length === 0) {
@@ -22,12 +31,9 @@ function User() {
     if (Object.keys(userConversionData).length === 0) {
       (async () => {
         setUserConversionData(await getConversionsByUserId());
-        console.log(userConversionData);
-        
       })();
     }
-
-    
+ 
     return ( 
       <div id="user"> 
      {
@@ -44,7 +50,6 @@ function User() {
         };
 
         let userConversionCompleteData: ConversionInfoByUserType[] = userConversionData[key];
-        
            return( 
            <Card key={index}  user={{...user}} 
             userConversionData={{...userConversionCompleteData}}
@@ -52,8 +57,6 @@ function User() {
         
           } )
         };
-     
-        
       </div>
     );
     }
