@@ -6,4 +6,5 @@ export type UserMetadataype = {
     name: string;
     avatar: string;
     occupation: string;
+    userId: string;
 }

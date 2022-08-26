@@ -20,7 +20,8 @@ export function convertMetauserDataToUserData() {
             avatar: "n/a",
             name: "User",
             occupation: "human",
-            time: ""
+            time: "",
+            userId: log.user_id.toString()
         }
     }
     for (let i = 0; i < (userLogs).length; i++) {

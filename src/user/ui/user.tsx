@@ -6,22 +6,12 @@ import { convertMetauserDataToUserData, getConversionsByUserId } from "../conver
 import { UserMetadataype } from "../types/userMetadataType";
 import { UserAllInfoObjType } from "../types/userAllInfoObj.type";
 import { ConversionInfoByUserType, UserConversionInfoType } from "../types/userConversion.type";
-import Dropdown from 'react-bootstrap/Dropdown';
 import SortBy from "./sortBy";
-
-
-
-// function returnSorted(sortBy, userInfo) {
-//   if (sortBy === 'name') {
-
-//   }
-// }
-
 
 function User() {
 
     const [userData, setUserData] = useState({} as {[id: number]: UserAllInfoObjType});
-    const [sortBy, setSortBy] = useState('id');
+    // const [sortBy, setSortBy] = useState('id');
 
     const [userConversionData, setUserConversionData] = useState({} as UserConversionInfoType);
     if (Object.keys(userData).length === 0) {
@@ -38,19 +28,23 @@ function User() {
  
     return (
       <div>
-      <SortBy criteria={"id"}/>
+        <br />
+      <SortBy criteria={"id"} />
+      <br />
+      <br />
       <div id="user"> 
      {
       
       Object.keys(userData).map((key, index) => {
-        let user:UserMetadataype = {
+        let user: UserMetadataype = {
               impression: userData[key]["impression"],
               conversion: userData[key]["conversion"],
               name: userData[key]["name"],
               avatar: userData[key]["avatar"],
               occupation: userData[key]["occupation"],
               revenue: userData[key]["revenue"],
-              time: userData[key]["time"]
+              time: userData[key]["time"],
+              userId: key
         };
 
         let userConversionCompleteData: ConversionInfoByUserType[] = userConversionData[key];

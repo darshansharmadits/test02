@@ -1,81 +1,80 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './css/card.css';
 import { UserMetadataype } from "../types/userMetadataType";
-// import Chart from "react-apexcharts";
 import { ConversionInfoByUserType } from "../types/userConversion.type";
+import Chart from "chart.js/auto";
+import { ChartConfiguration } from "chart.js";
+import CustomLoader from "../../widgets/loader";
 
 function Card(props:any) {
     const user: UserMetadataype = props.user;
     const userConversionInfo: ConversionInfoByUserType = props.userConversionData;
-    const xAxis = [Object.keys(userConversionInfo).map((key, _) => key)];
-    const yAxis = [Object.keys(userConversionInfo).map((key, index) => index+10)]
+    
+    // const yAxis = [Object.keys(userConversionInfo).map((key, index) => index+10)]
     let conversionCounter = 0;
     let impressionCounter = 0;
-    const points = [Object.keys(userConversionInfo).map((key, _) =>{
+    
+    
+    const [userImageErrorFlag, setUserImageErrorFlag] = useState(false);
+    const [graphLoader, setGraphLoader] = useState(true);
+    const [userAvatarLoader, setUserAvatarLoader] = useState(true);
+    const xAxis = useRef([Object.keys(userConversionInfo).map((key, _) => key)]);
+    const points = useRef([Object.keys(userConversionInfo).map((key, _) =>{
       conversionCounter += userConversionInfo[key].conversion;
       impressionCounter += userConversionInfo[key].impression;
       return Math.floor((conversionCounter/impressionCounter) * 100);
-    })];
-    
-    const [userImageErrorFlag, setUserImageErrorFlag] = useState(false);
+    })]);
+    useEffect(()=> {
+      const data = {
+        labels: xAxis.current[0],
+        datasets: [{
+          label: 'Conversions',
+          backgroundColor: `rgb(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)})`,
+          data: points.current[0],
+        }]
+      };
+    const config: ChartConfiguration = {
+      type: 'line',
+      data: data,
+      options: {
+        scales: {
+          y : {
+            beginAtZero: true,
+            display: false
+          },
+          x: {
+            display: false,
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+      }   
+    };
+      const canvasForChart: HTMLCanvasElement = document.getElementById('chart-' + user.userId) as HTMLCanvasElement;
+      const ctx = canvasForChart!.getContext('2d')!;
+      new Chart(ctx,config);
+      setGraphLoader(false);
+    }, [user.userId]);
 
-    // const data = {
-    //   options: {
-    //     grid: {
-    //       show: false,
-    //     },
-    //     chart: {
-    //       id: "line",
-    //       background: "none",
-    //       toolbar: {
-    //         show: false,
-    //       },
-    //     },
-    //     xaxis: {
-    //       labels: {
-    //         show: false,
-    //       },
-    //       axisBorder: {
-    //         show: false,
-    //       },
-    //       axisTicks: {
-    //         show: false,
-    //       },
-    //       categories: [...xAxis[0]],
-    //     },
-    //     yaxis: {
-    //       labels: {
-    //         show: false,
-    //       },
-    //       axisBorder: {
-    //         show: false,
-    //       },
-    //       axisTicks: {
-    //         show: false,
-    //       },
-    //       categories: [...yAxis[0]]
-        
-    //     },
-    //   },
-    //   series: [
-    //     {
-    //       name: "conversion",
-    //       data: [...points[0]]
-    //     },
-    //   ],
-    // };
-    
+
       return (
       <div>
         <div id='main-column-user-card'>
             <div id="user-pic-name-row">
                 <div id="user-avatar" style={{backgroundColor: `rgb(${Math.random()*(255 - 0) + 100},${Math.random()*(255 - 0) + 100},${Math.random()*(255 - 0) + 100})`}}>
-                { userImageErrorFlag ? <h3>{user.name[0]}</h3> : 
+                {userAvatarLoader ? <CustomLoader /> : <></> } 
+                {
+                 userImageErrorFlag ? <h3>{user.name[0]}</h3> : 
                     <img alt="user-img" src={user.avatar} onError={() => {
                         setUserImageErrorFlag(true);
-                    }} />
-                     
-                }  
+                        setUserAvatarLoader(false);
+                    }} onLoad={() => {
+                      setUserAvatarLoader(false);
+                    }}/>
+                } 
                 </div>
                 <div id="user-info">
                     <div id="user-name">{user.name.length < 21 ? user.name + " ".repeat(21-user.name.length) : user.name}</div>
@@ -89,16 +88,12 @@ function Card(props:any) {
             
               <div id="user-log-graph-menu">
                 <div id="graph">
-                  {points.length === 0 ?
-                  <div></div>
-              //   <Chart
-              //     options={data.options}
-              //     series={data.series}
-              //     type="line"
-              //     width="170" 
-              // />
-               : <div>No Data Recvd</div> 
-               } 
+                  <canvas id={"chart-" + user.userId}>
+                    {
+                    graphLoader ? 
+                    <CustomLoader />
+                    : <></>
+                    }</canvas>
                 </div>
                 <div id="conversion-info">
                   <p>Conversions 4/12 - 4/30</p>
