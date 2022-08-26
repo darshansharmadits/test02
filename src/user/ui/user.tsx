@@ -6,6 +6,8 @@ import { convertMetauserDataToUserData, getConversionsByUserId } from "../conver
 import { UserMetadataype } from "../types/userMetadataType";
 import { UserAllInfoObjType } from "../types/userAllInfoObj.type";
 import { ConversionInfoByUserType, UserConversionInfoType } from "../types/userConversion.type";
+import Dropdown from 'react-bootstrap/Dropdown';
+import SortBy from "./sortBy";
 
 
 
@@ -34,7 +36,9 @@ function User() {
       })();
     }
  
-    return ( 
+    return (
+      <div>
+      <SortBy criteria={"id"}/>
       <div id="user"> 
      {
       
@@ -57,6 +61,7 @@ function User() {
         
           } )
         };
+      </div>
       </div>
     );
     }

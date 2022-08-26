@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './css/card.css';
 import { UserMetadataype } from "../types/userMetadataType";
-import Chart from "react-apexcharts";
+// import Chart from "react-apexcharts";
 import { ConversionInfoByUserType } from "../types/userConversion.type";
 
 function Card(props:any) {
@@ -19,51 +19,51 @@ function Card(props:any) {
     
     const [userImageErrorFlag, setUserImageErrorFlag] = useState(false);
 
-    const data = {
-      options: {
-        grid: {
-          show: false,
-        },
-        chart: {
-          id: "line",
-          background: "none",
-          toolbar: {
-            show: false,
-          },
-        },
-        xaxis: {
-          labels: {
-            show: false,
-          },
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
-          categories: [...xAxis[0]],
-        },
-        yaxis: {
-          labels: {
-            show: false,
-          },
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
-          categories: [...yAxis[0]]
+    // const data = {
+    //   options: {
+    //     grid: {
+    //       show: false,
+    //     },
+    //     chart: {
+    //       id: "line",
+    //       background: "none",
+    //       toolbar: {
+    //         show: false,
+    //       },
+    //     },
+    //     xaxis: {
+    //       labels: {
+    //         show: false,
+    //       },
+    //       axisBorder: {
+    //         show: false,
+    //       },
+    //       axisTicks: {
+    //         show: false,
+    //       },
+    //       categories: [...xAxis[0]],
+    //     },
+    //     yaxis: {
+    //       labels: {
+    //         show: false,
+    //       },
+    //       axisBorder: {
+    //         show: false,
+    //       },
+    //       axisTicks: {
+    //         show: false,
+    //       },
+    //       categories: [...yAxis[0]]
         
-        },
-      },
-      series: [
-        {
-          name: "conversion",
-          data: [...points[0]]
-        },
-      ],
-    };
+    //     },
+    //   },
+    //   series: [
+    //     {
+    //       name: "conversion",
+    //       data: [...points[0]]
+    //     },
+    //   ],
+    // };
     
       return (
       <div>
@@ -78,8 +78,10 @@ function Card(props:any) {
                 }  
                 </div>
                 <div id="user-info">
-                    <div id="user-name">{user.name}</div>
-                    <div id="user-job">{user.occupation}</div>
+                    <div id="user-name">{user.name.length < 21 ? user.name + " ".repeat(21-user.name.length) : user.name}</div>
+                    <div id="user-job">
+                      {user.occupation.length < 40 ? user.occupation + " ".repeat(40-user.occupation.length) : user.occupation}
+                      </div>
                     <div id="empty-div-user-info"></div>
                 </div>
             </div>
@@ -87,13 +89,14 @@ function Card(props:any) {
             
               <div id="user-log-graph-menu">
                 <div id="graph">
-                  {Object.keys(data).length !== 0 ?
-                <Chart
-                  options={data.options}
-                  series={data.series}
-                  type="line"
-                  width="170" 
-              />
+                  {points.length === 0 ?
+                  <div></div>
+              //   <Chart
+              //     options={data.options}
+              //     series={data.series}
+              //     type="line"
+              //     width="170" 
+              // />
                : <div>No Data Recvd</div> 
                } 
                 </div>

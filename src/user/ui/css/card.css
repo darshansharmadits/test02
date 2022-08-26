@@ -23,8 +23,11 @@
 
 #user-avatar {
     border-radius: 50%;
-    margin: 10px;
+    /* margin: 10px; */
     width: 65px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
 #user-avatar > h3 {
@@ -41,17 +44,17 @@
 #user-name {
     margin-top: 10px;
     flex:1;
-    font-size: 24px;
     font-weight: bold;
+    font-size:14px;
 }
 
 #user-job{
     flex:1;
-    font-size: 14px;
     color: grey;
-    padding: 1px;
-    margin-left: 5%;
+    /* padding: 1px; */
+    /* margin-left: 5%; */
     font-weight: bold;
+    font-size: 10px;
 }
 
 #empty-div-user-info{
