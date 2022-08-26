@@ -12,8 +12,8 @@ function Card(props:any) {
     
     // const yAxis = [Object.keys(userConversionInfo).map((key, index) => index+10)]
     let conversionCounter = 0;
-    let impressionCounter = 0;
-    
+    let impressionCounter = 0;    
+    // const userContext:{userPageLoader: boolean, setUserPageLoader:(val:boolean)=>void} = useContext(UserContext);
     
     const [userImageErrorFlag, setUserImageErrorFlag] = useState(false);
     const [graphLoader, setGraphLoader] = useState(true);
@@ -24,6 +24,8 @@ function Card(props:any) {
       impressionCounter += userConversionInfo[key].impression;
       return Math.floor((conversionCounter/impressionCounter) * 100);
     })]);
+    //@ts-ignore
+    // userContext.setUserPageLoader(false);
     useEffect(()=> {
       const data = {
         labels: xAxis.current[0],
@@ -57,6 +59,7 @@ function Card(props:any) {
       const ctx = canvasForChart!.getContext('2d')!;
       new Chart(ctx,config);
       setGraphLoader(false);
+      // userContext.setUserPageLoader(false);
     }, [user.userId]);
 
 
@@ -88,12 +91,13 @@ function Card(props:any) {
             
               <div id="user-log-graph-menu">
                 <div id="graph">
-                  <canvas id={"chart-" + user.userId}>
-                    {
+                {
                     graphLoader ? 
-                    <CustomLoader />
+                    <CustomLoader width={"30px"}/>
                     : <></>
-                    }</canvas>
+                  }
+                  <canvas hidden={graphLoader} id={"chart-" + user.userId}>
+                  </canvas>
                 </div>
                 <div id="conversion-info">
                   <p>Conversions 4/12 - 4/30</p>
