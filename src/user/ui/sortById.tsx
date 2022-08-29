@@ -12,7 +12,9 @@ const SortById= (props:any) => {
     return (
         <div id="user">
             <>
+            
     {
+        
     Object.keys(userData).map((key, index) => {
         let user: UserMetadataype = {
               impression: userData[key]["impression"],
@@ -29,9 +31,11 @@ const SortById= (props:any) => {
            return( 
            <Card key={index}  user={{...user}} 
             userConversionData={{...userConversionCompleteData}}
-            /> );
+            /> 
+            )
           })
         }
+        
     </>
     </div>
     );

@@ -40,7 +40,7 @@ const SortByName= (props:any) => {
                   
                  return (<Card key={userId}  user={{...user}} 
                     userConversionData={{...userConversionCompleteData}}
-                    />);
+                    />)
             })
         })
     };

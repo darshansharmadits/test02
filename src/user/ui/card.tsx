@@ -22,7 +22,7 @@ function Card(props:any) {
     const points = useRef([Object.keys(userConversionInfo).map((key, _) =>{
       conversionCounter += userConversionInfo[key].conversion;
       impressionCounter += userConversionInfo[key].impression;
-      return Math.floor((conversionCounter/impressionCounter) * 100);
+      return Math.floor((conversionCounter/(impressionCounter+conversionCounter)) * 100);
     })]);
     //@ts-ignore
     // userContext.setUserPageLoader(false);
@@ -91,8 +91,8 @@ function Card(props:any) {
             
               <div id="user-log-graph-menu">
                 <div id="graph">
-                {
-                    graphLoader ? 
+                  {
+                    graphLoader ?
                     <CustomLoader width={"30px"}/>
                     : <></>
                   }
@@ -111,7 +111,7 @@ function Card(props:any) {
             </div>
         </div>
       </div>
-    );
+    )
   }
 
 export default Card;
