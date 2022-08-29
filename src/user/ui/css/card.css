@@ -119,7 +119,6 @@
     margin: 35px auto;
 }
 
-
 @media only screen and (max-width: 800px) {
 
     #user, #main-column-user-card {
@@ -146,10 +145,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
-
-    #graph {
-        width: 95%;
     }
   
 }

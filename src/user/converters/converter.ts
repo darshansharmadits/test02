@@ -6,8 +6,8 @@ import { UserType } from "../types/userType";
 import { UserMetadataype } from "../types/userMetadataType";
 // import { UserMetadataype } from "../types/userMetadataType";
 
-const userLogs: ConversionImpressionLogType[] = userLogList as any;
-const usersList: UserType[] = data as any;
+let userLogs: ConversionImpressionLogType[] = userLogList as any;
+let usersList: UserType[] = data as any;
 
 export function convertMetauserDataToUserData() {
     let userData: { [id: number]: UserMetadataype } = {};
@@ -45,7 +45,7 @@ export function convertMetauserDataToUserData() {
             userData[user.id].name = user.name;
         }
     }
-    return userData;
+    return Object.entries(userData).slice(0,20).map(entry => entry[1]);
 }
 
 export function getConversionsByUserId() {
@@ -75,5 +75,5 @@ export function getConversionsByUserId() {
         }
     }
 
-    return userConversionsData;
+    return { ...userConversionsData };
 }
