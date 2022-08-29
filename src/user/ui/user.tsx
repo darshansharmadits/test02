@@ -5,11 +5,11 @@ import { UserConversionInfoType } from "../types/userConversion.type";
 import SortByName from "./sortByName";
 import SortById from "./sortById";
 import CustomLoader from "../../widgets/loader";
-import { UserContext } from "../context/user.context";
 
 const User = (props:any) => {
     const [userData, setUserData] = useState({} as {[id: number]: UserAllInfoObjType});
-    const [sortBy, setSortBy] = useState(props.sortCardsBy || "userid");
+    const sortUsersBy: string = props.sortBy;
+    const [sortBy, setSortBy] = useState(sortUsersBy || "userid");
     const [userPageloader, setUserPageLoader] = useState(false);
 
     const [userConversionData, setUserConversionData] = useState({} as UserConversionInfoType);
@@ -40,8 +40,8 @@ const User = (props:any) => {
     
     
     return (
-      <div>
-        <div>
+      <div id="user-cards">
+        <div id="sortby-section">
         <input checked={sortBy === "userid"} type="radio" id="sortbyid" name="sortby" value="userid" onChange={event => {
           setUserPageLoader(true);
           setSortBy(event?.target.value);
@@ -58,9 +58,7 @@ const User = (props:any) => {
         </div> 
             {
               userPageloader ? <CustomLoader width={"100px"}></CustomLoader> : 
-              <UserContext.Provider value={{ userPageloader, setUserPageLoader }} >
-                { renderUserCardsBy(sortBy) }
-              </UserContext.Provider>
+                renderUserCardsBy(sortBy) 
             }
       </div>
     );

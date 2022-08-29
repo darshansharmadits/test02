@@ -13,8 +13,6 @@ root.render(
 <BrowserRouter>
     <Routes>
     <Route path="/" element={<User sortBy={"userid"}></User>} />
-      <Route path="/id" element={<User sortBy={"userid"}></User>} />
-      <Route path="/name" element={<User sortBy={"username"}></User>} />
     </Routes>
   </BrowserRouter>
 );
